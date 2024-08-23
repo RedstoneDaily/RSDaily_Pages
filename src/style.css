@@ -1,4 +1,41 @@
+/* 定义字体 */
+@font-face {
+  font-family: "欣意冠黑体";
+  src: url("/fonts/FontquanXinYiGuanHeiTi-Regular.ttf") format("truetype");
+}
+
 :root {
+  /* 主红色，深红色，浅红色 */
+  --red-color: #A81111;
+  --dark-red-color: #540808;
+  --light-red-color: #F51818;
+
+  /* 白色 */
+  --white-color: #E6EBE6;
+
+  /* 黑色 */
+  --black-color: #16161B;
+
+  /* -----------------------------分割线----------------------------- */
+  /* 背景色 */
+  --background-color: var(--white-color);
+  /* 文字主色 */
+  --text-main-color: var(--red-color);
+  /* 内容文字颜色 */
+  --text-content-color: var(--black-color);
+}
+
+html,body{
+  margin: 0;
+  padding:0;
+}
+
+body {
+  font-family: "欣意冠黑体";
+  background-color: var(--background-color);
+}
+
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -76,4 +113,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
