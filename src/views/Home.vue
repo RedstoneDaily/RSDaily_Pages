@@ -24,9 +24,15 @@ import Line from "../compoments/textUnderline.vue"
 
         </div>
     </div>
+
+    <div class="page1"></div>
+
+    <div class="page2"></div>
+
+    <div class="page3"></div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .main {
     width: 100vw;
     height: 100vh;
