@@ -25,6 +25,12 @@
   --text-content-color: var(--black-color);
 }
 
+:root {
+  --text-button: 24px;
+  --text-content: 24px;
+  --text-title: 36px;
+}
+
 html,body{
   margin: 0;
   padding:0;
