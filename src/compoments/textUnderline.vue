@@ -2,18 +2,17 @@
 </script>
 
 <template>
-    <div class="button-line">
+    <div class="underline">
         <slot></slot>
     </div>
 </template>
 
 <style scoped>
-.button-line{
+.underline{
     display: inline-block;
-    color: white;
     font-size: var(--text-title);
 }
-.button-line::after{
+.underline::after{
     content: "";
     display: block;
     width: 0;
@@ -21,7 +20,7 @@
     background-color: var(--red-color);
     transition: width 0.5s;
 }
-.button-line:hover::after{
+.underline:hover::after{
     width: 100%;
 }
 </style>
