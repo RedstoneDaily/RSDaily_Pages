@@ -1,7 +1,7 @@
 {
-    "name": "rd-a",
+    "name": "rsdaily_pages",
     "private": true,
-    "version": "0.0.0",
+    "version": "0.1.1",
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -11,11 +11,11 @@
     "dependencies": {
         "eslint": "^9.9.0",
         "eslint-plugin-vue": "^9.27.0",
-        "rd-a": "file:",
         "vue": "^3.4.37",
         "vue-router": "4"
     },
     "devDependencies": {
+        "@types/node": "^22.5.0",
         "@vitejs/plugin-vue": "^5.1.2",
         "sass-embedded": "^1.77.8",
         "typescript": "^5.5.3",
