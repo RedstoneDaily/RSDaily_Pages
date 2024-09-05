@@ -6,15 +6,31 @@
 
 :root {
   /* 主红色，深红色，浅红色 */
-  --red-color: #A81111;
+  --red-color: #a81111;
   --dark-red-color: #540808;
-  --light-red-color: #F51818;
+  --light-red-color: #f51818;
 
   /* 白色 */
-  --white-color: #E6EBE6;
+  --white-color: #e6ebe6;
 
   /* 黑色 */
-  --black-color: #16161B;
+  --black-color: #16161b;
+
+  /* -----------------------------移植过来的样式----------------------------- */
+  /* 黑色 */
+  --RD-color-black: #16161b;
+  --RD-color-black-50: #16161b80;
+  /* 白色 */
+  --RD-color-white: #e6ebe6;
+  --RD-color-white-50: #e6ebe680;
+  /* 灰色 */
+  --RD-color-gray: #d9d9d9;
+  --RD-color-gray-50: #d9d9d980;
+  /* 红色 */
+  --RD-color-red: #a81111;
+  --RD-color-red-50: #a8111180;
+  /* 深红 */
+  --RD-color-crimson: #540808;
 
   /* -----------------------------分割线----------------------------- */
   /* 背景色 */
@@ -32,9 +48,10 @@
   --text-title-big: 64px;
 }
 
-html,body{
+html,
+body {
   margin: 0;
-  padding:0;
+  padding: 0;
 }
 
 body {

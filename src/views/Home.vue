@@ -3,95 +3,113 @@ import Line from "../compoments/textUnderline.vue"
 </script>
 
 <template>
-    <div class="main">
-        <div>
-            <img width="40%" src="/Logo.svg" alt="">
-            <h1>/ 发现,并创造自己的灵感 /</h1>
-        </div>
-        <div class="jumpLink">
-            <router-link to="/404">
-                <Line>探索最新日报 >></Line>
-            </router-link>
-            <router-link to="/404">
-                <Line>查看往期日报 >></Line>
-            </router-link>
-            <router-link to="/404">
-                <Line>搜索红石机器 >></Line>
-            </router-link>
-            <router-link to="/404">
-                <Line>查看日报小工具 >></Line>
-            </router-link>
+    <div class="home">
 
+        <div class="main">
+            <div>
+                <img width="40%" src="/Logo.svg" alt="">
+                <h1>/ 发现,并创造自己的灵感 /</h1>
+            </div>
+            <div class="jumpLink">
+                <router-link to="/content">
+                    <Line>探索最新日报 >></Line>
+                </router-link>
+                <router-link to="/404">
+                    <Line>查看往期日报 >></Line>
+                </router-link>
+                <router-link to="/404">
+                    <Line>搜索红石机器 >></Line>
+                </router-link>
+                <router-link to="/404">
+                    <Line>查看日报小工具 >></Line>
+                </router-link>
+
+            </div>
+        </div>
+
+        <div class="page1">
+            <div class="mask">
+                <div></div>
+            </div>
+            <img src="/ItemTexture/clock.png" alt="">
+            <div class="title">
+                <div><span>每天</span>都能收到</div>
+                <div><span>优质</span>红石信息</div>
+            </div>
+            <div class="content">以质量而非流量优先的方式重塑信息源,
+                打破视频社交媒体网站的推荐算法制造的信息茧房、以及对小众圈子的消声。归还Minecraft技术社区被淹没在日益浮躁、肤浅的娱乐之下的话语权。
+            </div>
+            <div class="link">
+                <router-link to="/source">
+                    <Line>探索今日日报 >></Line>
+                </router-link>
+                <router-link to="/404">
+                    <Line>查看往期日报 >></Line>
+                </router-link>
+            </div>
+        </div>
+        <div class="page2">
+            <div class="mask">
+                <div></div>
+            </div>
+            <img src="/ItemTexture/knowledge_book.png" alt="">
+            <div class="title">
+                <div><span>整合</span>全网信息</div>
+                <div><span>搜索</span>更加全面</div>
+            </div>
+            <div class="content">使用红石日报的搜索功能, 可以搜索全网/各大档案馆的所有机器信息, 使搜索更全面. 不仅如此, 我们还积极收录更多的信息源, 如果发现我们没有覆盖到的, 欢迎联系我们收录
+            </div>
+            <div class="link">
+                <router-link to="/404">
+                    <Line>查看所有可用的信息源 >></Line>
+                </router-link>
+                <router-link to="/404">
+                    <Line>尝试搜索 >></Line>
+                </router-link>
+                <router-link to="/404">
+                    <Line>报告更多 >></Line>
+                </router-link>
+            </div>
+        </div>
+        <div class="page3">
+            <div class="mask">
+                <div></div>
+            </div>
+            <img src="/ItemTexture/recovery_compass_07.png" alt="">
+            <div class="title">
+                <div>日报<span>小工具</span></div>
+                <div><span>助力</span>MC开发</div>
+            </div>
+            <div class="content">我们提供一些对于MC开发实用的小工具, 使红石研究更加方便和顺畅, 而且不仅限于红石! 我们致力于使MC开发更简单和方便, 以及使小工具更加易用和实用
+            </div>
+            <div class="link">
+                <router-link to="/404">
+                    <Line>查看所有小工具 >></Line>
+                </router-link>
+            </div>
         </div>
     </div>
 
-    <div class="page1">
-        <div class="mask">
-            <div></div>
-        </div>
-        <img src="/public/ItemTexture/clock.png" alt="">
-        <div class="title">
-            <div><span>每天</span>都能收到</div>
-            <div><span>优质</span>红石信息</div>
-        </div>
-        <div class="content">以质量而非流量优先的方式重塑信息源, 打破视频社交媒体网站的推荐算法制造的信息茧房、以及对小众圈子的消声。归还Minecraft技术社区被淹没在日益浮躁、肤浅的娱乐之下的话语权。
-        </div>
-        <div class="link">
-            <router-link to="/404">
-                <Line>探索今日日报 >></Line>
-            </router-link>
-            <router-link to="/404">
-                <Line>查看往期日报 >></Line>
-            </router-link>
-        </div>
-    </div>
-    <div class="page2">
-        <div class="mask">
-            <div></div>
-        </div>
-        <img src="/public/ItemTexture/knowledge_book.png" alt="">
-        <div class="title">
-            <div><span>整合</span>全网信息</div>
-            <div><span>搜索</span>更加全面</div>
-        </div>
-        <div class="content">使用红石日报的搜索功能, 可以搜索全网/各大档案馆的所有机器信息, 使搜索更全面. 不仅如此, 我们还积极收录更多的信息源, 如果发现我们没有覆盖到的, 欢迎联系我们收录
-        </div>
-        <div class="link">
-            <router-link to="/404">
-                <Line>查看所有可用的信息源 >></Line>
-            </router-link>
-            <router-link to="/404">
-                <Line>尝试搜索 >></Line>
-            </router-link>
-            <router-link to="/404">
-                <Line>报告更多 >></Line>
-            </router-link>
-        </div>
-    </div>
-    <div class="page3">
-        <div class="mask">
-            <div></div>
-        </div>
-        <img src="/public/ItemTexture/recovery_compass_07.png" alt="">
-        <div class="title">
-            <div>日报<span>小工具</span></div>
-            <div><span>助力</span>MC开发</div>
-        </div>
-        <div class="content">我们提供一些对于MC开发实用的小工具, 使红石研究更加方便和顺畅, 而且不仅限于红石! 我们致力于使MC开发更简单和方便, 以及使小工具更加易用和实用
-        </div>
-        <div class="link">
-            <router-link to="/404">
-                <Line>查看所有小工具 >></Line>
-            </router-link>
-        </div>
-    </div>
 </template>
 
 <style lang="scss" scoped>
 img {
     image-rendering: pixelated;
 }
+
+.home {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth; // 添加平滑滚动
+}
+::-webkit-scrollbar {
+    width: 0;
+}
+
 @mixin page {
+    scroll-snap-align: start;
     // 页面宽高100，背景为figma设计图中的，设置定位
     width: 100%;
     height: 100vh;
@@ -161,6 +179,7 @@ img {
     height: 100vh;
     background: url('/background/Fparrot_CPU_small.png');
     background-size: 100% 100%;
+    scroll-snap-align: start;
 
     img {
         pointer-events: none;
@@ -224,17 +243,18 @@ img {
         }
     }
 
-    .link{
+    .link {
         bottom: 100px;
         left: 60px;
     }
 }
+
 .page2 {
     @include page();
 
     .title {
         top: 80px;
-        right:280px;
+        right: 280px;
 
         :last-child {
             right: -220px;
@@ -265,11 +285,12 @@ img {
         }
     }
 
-    .link{
+    .link {
         bottom: 100px;
         right: 60px;
     }
 }
+
 .page3 {
     @include page();
 
@@ -304,7 +325,7 @@ img {
         }
     }
 
-    .link{
+    .link {
         bottom: 100px;
         left: 60px;
     }
