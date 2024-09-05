@@ -13,6 +13,18 @@ const routes = [
     }, {
         path: '/source',
         component: () => import('@/views/source/source.vue')
+    }, {
+        path: '/tools',
+        children: [
+            {
+                path: 'acacia',
+                component: () => import('@/views/tools/AcaciaMCView.vue')
+            },
+            {
+                path: 'rssearch',
+                component: () => import('@/views/tools/RSSearchView.vue')
+            }
+        ]
     }
 ]
 
