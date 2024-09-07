@@ -17,7 +17,7 @@ import Line from "../compoments/textUnderline.vue"
                 <router-link to="/404">
                     <Line>查看往期日报 >></Line>
                 </router-link>
-                <router-link to="/404">
+                <router-link to="/search">
                     <Line>搜索红石机器 >></Line>
                 </router-link>
                 <router-link to="/404">
@@ -97,15 +97,25 @@ img {
     image-rendering: pixelated;
 }
 
-.home {
-    width: 100vw;
-    height: 100vh;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth; // 添加平滑滚动
-}
-::-webkit-scrollbar {
-    width: 0;
+// .home {
+//     width: 100vw;
+//     height: 100vh;
+//     overflow-y: scroll;
+//     scroll-snap-type: y mandatory;
+//     scroll-behavior: smooth; // 添加平滑滚动
+// }
+// ::-webkit-scrollbar {
+//     width: 0;
+// }
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @mixin page {
@@ -125,6 +135,9 @@ img {
         // 定位+超大字体
         position: absolute;
         font-size: 90px;
+        animation: appear linear;
+        animation-timeline: view();
+        animation-range: entry 0;
 
         div {
             position: relative;

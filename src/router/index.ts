@@ -1,10 +1,11 @@
-import { createMemoryHistory, createRouter } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import Page_404 from "@/views/404.vue"
 import ContentPage from "@/views/ContentPage.vue";
+import Search from "@/views/Search.vue";
 
 const router = createRouter({
-    history: createMemoryHistory(),
+    history: createWebHashHistory(),
     routes: [
         {
             path: "/",
@@ -20,6 +21,11 @@ const router = createRouter({
             path: '/content',
             name: 'content',
             component: ContentPage
+        },
+        {
+            path: '/search',
+            name: 'search',
+            component: Search
         }
     ]
 })
