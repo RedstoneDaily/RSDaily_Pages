@@ -1,5 +1,5 @@
 <script setup>
-import Line from "../compoments/textUnderline.vue"
+import Line from '../component/textUnderline.vue';
 </script>
 
 <template>
@@ -11,7 +11,8 @@ import Line from "../compoments/textUnderline.vue"
                 <h1>/ 发现,并创造自己的灵感 /</h1>
             </div>
             <div class="jumpLink">
-                <router-link to="/content">
+                <!-- <router-link to="/content"> -->
+                <router-link :to="{ path: '/content' , query: { date: '2024-09-06' }}">
                     <Line>探索最新日报 >></Line>
                 </router-link>
                 <router-link to="/404">

@@ -1,5 +1,5 @@
 <script setup>
-import textUnderline from '../compoments/textUnderline.vue';
+import textUnderline from '../component/textUnderline.vue';
 </script>
 
 <template>

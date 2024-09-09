@@ -32,6 +32,8 @@
   /* 深红 */
   --RD-color-crimson: #540808;
 
+  --RD-color-bg: var(--RD-color-white);
+
   /* -----------------------------分割线----------------------------- */
   /* 背景色 */
   --background-color: var(--white-color);

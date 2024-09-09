@@ -1,10 +1,22 @@
 <script setup>
+const props = defineProps({
+    data: {
+        type: Object,
+        required: true
+    }
+});
+
+const formattedDate = props.data;
+
+const openBilibiliUrl = (url) => {
+    window.open(url, '_blank');
+};
 </script>
 
 <template>
-    <div class="news-module2">
+    <div @click="openBilibiliUrl(`https://www.bilibili.com/video/${formattedDate.bvid}`)" class="news-module2">
         <!-- 封面图 -->
-        <img height="100%" src="/3.png" alt="">
+        <img width="220px" height="100%" :src="formattedDate.cover" referrerpolicy="no-referrer" alt="">
         <!-- 排名3 -->
         <div class="rank-third">
             <div class="text">
@@ -18,19 +30,17 @@
                 <div class="content_block3"></div>
             </div>
             <div class="content_block2"></div>
-            <div class="title">【新世界记录】高速2x2玻璃门</div>
+            <div class="title">{{ formattedDate.title }}</div>
             <!-- 械电图标 -->
             <div class="icon">
                 <img src="/src/assets/icon/xiedian.svg" alt="">
             </div>
             <div class="synopsis">
-                作者：cc_charlie（我） <br>
-                体积：288blocks <br>
-                关门：0s（0.15s无痕处理）开门：0.15
+                {{ formattedDate.description }}
             </div>
             <div class="author">
                 <img src="/src/assets/icon/bilibili.svg" alt="">
-                <span>CC-Charlie</span>
+                <span>{{ formattedDate.data.owner.author }}</span>
             </div>
         </div>
     </div>
@@ -79,6 +89,7 @@
     right: 0;
     bottom: 0;
 }
+
 .content .icon {
     position: absolute;
     right: 0;
@@ -86,6 +97,7 @@
     height: var(--text-height);
     background-color: var(--RD-color-red);
 }
+
 .content img {
     position: absolute;
     right: 6px;
@@ -136,12 +148,20 @@
 }
 
 .synopsis {
+    /* 显示三行文字，剩下的显示省略号 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
     font-size: 15px;
     color: var(--RD-color-black);
     position: absolute;
     top: var(--text-height);
     left: 60px;
 }
+
 /* 底部作者标签 */
 .content .author {
     width: 100%;

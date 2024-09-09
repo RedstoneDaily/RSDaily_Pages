@@ -1,6 +1,21 @@
+<script setup>
+const props = defineProps({
+    data: {
+        type: Object,
+        required: true
+    }
+});
+
+const formattedDate = props.data;
+
+const openBilibiliUrl = (url) => {
+    window.open(url, '_blank');
+};
+</script>
+
 <template>
-    <div class="news-module">
-        <!-- <img src="/fm.png" alt=""> -->
+    <div @click="openBilibiliUrl(`https://www.bilibili.com/video/${formattedDate.bvid}`)" class="news-module">
+        <img :src="'https:' + formattedDate.cover" referrerpolicy="no-referrer" alt="">
         <!-- 今日头条红头 -->
         <div class="news-header">
             <!-- 红色底色块 -->
@@ -25,15 +40,13 @@
                 <div class="content_block3"></div>
             </div>
             <div class="content_block2"></div>
-            <div class="title">【新世界记录】高速2x2玻璃门</div>
+            <div class="title">{{ formattedDate.title }}</div>
             <div class="synopsis">
-                作者：cc_charlie（我） <br>
-                体积：288blocks <br>
-                关门：0s（0.15s无痕处理）开门：0.15
+                {{ formattedDate.description }}
             </div>
             <div class="author">
                 <img src="/src/assets/icon/bilibili.svg" alt="">
-                <span>CC-Charlie</span>
+                <span>{{ formattedDate.data.owner.author }}</span>
             </div>
         </div>
     </div>
@@ -53,7 +66,7 @@ img {
     /* 模块的整体样式 */
     flex: 1;
     position: relative;
-    background-image: url(/public/fm.png);
+    /* background-image: url(/public/fm.png); */
     background-size: cover;
     background-position: center;
 }
@@ -174,28 +187,37 @@ img {
 }
 
 .synopsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
     font-size: 15px;
     color: var(--RD-color-black);
     position: absolute;
     top: 40px;
     left: 60px;
 }
+
 /* 底部作者标签 */
-.content .author{
+.content .author {
     width: 100%;
     height: 24px;
     position: absolute;
     bottom: 0;
     left: 40px;
 }
-.content .author img{
+
+.content .author img {
     width: 24px;
     height: 24px;
     position: absolute;
     top: 0;
     left: 0;
 }
-.content .author span{
+
+.content .author span {
     position: absolute;
     left: 24px;
     top: 0;

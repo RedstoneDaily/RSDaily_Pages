@@ -1,4 +1,14 @@
 <script setup>
+// 定义 props 接收父组件传递的 date 参数
+const props = defineProps({
+    date: {
+        type: String,
+        required: true
+    }
+});
+
+// 格式化日期为 [YY.MM.DD] 形式
+const formattedDate = `[${String(props.date).slice(-8)}]`;
 </script>
 
 <template>
@@ -6,8 +16,6 @@
         <!-- 盒子黑色滤镜 -->
         <div class="shadow"></div>
 
-        <!-- 底部灰色块阴影 -->
-        <!-- <div class="bottom_gray_shadow"></div> -->
         <!-- 底部灰色块 -->
         <div class="bottom_gray_piece">
             <div class="bottom_gray_piece2"></div>
@@ -32,8 +40,8 @@
             <div class="right_black_piece3"></div>
         </div>
 
-        <!-- 右边日期块 -->
-        <span class="date">[24.08.08]</span>
+        <!-- 右边日期块，动态显示传入的年月日 -->
+        <span class="date">{{ formattedDate }}</span>
     </div>
 </template>
 
@@ -42,11 +50,10 @@
     position: relative;
     width: 100%;
     height: 206px;
-    background-image: url(/public/background/rd-nn_small.png);
+    background-image: url(/background/rd-nn_small.png);
     background-size: 100%;
     background-position: 0% 70%;
     box-shadow: 0px 2px 6px 2px #00000080;
-    /* overflow: hidden; */
 }
 
 .title {
@@ -82,14 +89,12 @@
 }
 
 .left_red_piece {
-    /* 宽高、背景颜色、路径切割 */
     width: 40%;
     height: 50px;
     background-color: var(--RD-color-red-50);
     clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
     filter: drop-shadow(8px 10px 15px #000000);
 
-    /* 定位布局 */
     position: absolute;
     bottom: 50px;
 }
@@ -105,7 +110,6 @@
 .right_black_piece {
     width: 60%;
     height: 60px;
-    /* background-color: aqua; */
 
     position: absolute;
     right: 0;
@@ -149,18 +153,6 @@
     position: absolute;
     right: 0;
     bottom: 70px;
-}
-
-.bottom_gray_shadow {
-    width: 75%;
-    height: 62px;
-    background-color: #0000005b;
-    transform: skewX(-22deg);
-    filter: blur(3px);
-
-    position: absolute;
-    right: 0;
-    bottom: -4px;
 }
 
 .bottom_gray_piece {

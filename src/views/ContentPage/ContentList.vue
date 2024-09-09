@@ -1,37 +1,77 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import ContentItem1st from '@/component/content/ContentItem1st.vue';
 import ContentItem2nd from '@/component/content/ContentItem2nd.vue';
 import ContentItem3rd from '@/component/content/ContentItem3rd.vue';
-
 import ContentItem from '@/component/content/ContentItem.vue';
+
+const props = defineProps({
+    date: {
+        type: String,
+        required: true,
+    },
+});
+
+const contentList = ref([]);
+const error = ref();
+const isLoading = ref(true); // 加载状态
+
+const fetchData = async () => {
+    isLoading.value = true; // 开始加载
+    try {
+        const res = await fetch(`https://api.rsdaily.com/v2/daily/get/${props.date}`, { method: 'GET' });
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        const data = await res.json();
+        contentList.value = data;
+    } catch (err) {
+        console.error('Fetch error:', err);
+        error.value = err;
+    } finally {
+        isLoading.value = false; // 加载结束
+    }
+};
+
+onMounted(() => {
+    fetchData();
+});
 </script>
 
 <template>
-    <div class="content-list">
-        <!-- 头部三个 -->
+    <div v-if="isLoading">
+        加载中...( ￣□￣)/ 让数据飞一会儿
+    </div>
+
+    <div v-else-if="contentList.length" class="content-list">
+        <!-- 正常数据展示 -->
         <div class="content-list-top">
-            <!-- 左边 -->
             <div class="item_1st">
-                <ContentItem1st></ContentItem1st>
+                <ContentItem1st :data="contentList[0]"></ContentItem1st>
             </div>
-            <!-- 右边 -->
             <div class="item_right">
                 <div class="item item_2nd">
-                    <ContentItem2nd></ContentItem2nd>
+                    <ContentItem2nd :data="contentList[1]"></ContentItem2nd>
                 </div>
                 <div class="item item_3rd">
-                    <ContentItem3rd></ContentItem3rd>
+                    <ContentItem3rd :data="contentList[2]"></ContentItem3rd>
                 </div>
             </div>
         </div>
-        <!-- 其他 -->
         <div class="content-list-other">
-            <ContentItem></ContentItem>
-            <ContentItem></ContentItem>
-            <ContentItem></ContentItem>
+            <ContentItem v-for="(item, index) in contentList.slice(3)" :key="index + 3" :data="item"></ContentItem>
         </div>
     </div>
+
+    <div v-else-if="error">
+        出错啦！现场只发现了这个讯息：{{ error.message }}。快叫管理员来看看！！
+    </div>
+
+    <div v-else>
+        数据呢？！(っ °Д °;)っ不见啦！！
+    </div>
 </template>
+
 
 <style scoped>
 /* div {
@@ -93,7 +133,7 @@ import ContentItem from '@/component/content/ContentItem.vue';
 }
 
 
-.content-list-other{
+.content-list-other {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;

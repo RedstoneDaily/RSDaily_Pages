@@ -1,17 +1,29 @@
 <script setup>
+const props = defineProps({
+    data: {
+        type: Object,
+        required: true
+    }
+});
+
+const formattedDate = props.data;
+
+const openBilibiliUrl = (url) => {
+    window.open(url, '_blank');
+};
 </script>
 
 <template>
-    <div class="ContentItem">
+    <div @click="openBilibiliUrl(`https://www.bilibili.com/video/${formattedDate.bvid}`)" class="ContentItem">
         <!-- 封面图 -->
-        <img height="100%" src="/3.png" alt="">
+        <img width="220px" height="100%" :src="formattedDate.cover" referrerpolicy="no-referrer" alt="">
         <!-- 内容 -->
         <div class="content">
             <div class="content_block1">
                 <!-- <div class="content_block3"></div> -->
             </div>
             <!-- <div class="content_block2"></div> -->
-            <div class="title">【新世界记录】高速2x2玻璃门</div>
+            <div class="title">{{ formattedDate.title }}</div>
             <!-- 械电图标 -->
             <div class="icon">
                 <img src="/src/assets/icon/xiedian_black.svg" alt="">
@@ -22,13 +34,11 @@
                 <div class="redline_point"></div>
             </div>
             <div class="synopsis">
-                作者：cc_charlie（我） <br>
-                体积：288blocks <br>
-                关门：0s（0.15s无痕处理）开门：0.15
+                {{ formattedDate.description }}
             </div>
             <div class="author">
                 <img src="/src/assets/icon/bilibili.svg" alt="">
-                <span>CC-Charlie</span>
+                <span>{{ formattedDate.data.owner.author }}</span>
             </div>
         </div>
     </div>
@@ -36,7 +46,7 @@
 
 <style scoped>
 .ContentItem {
-        box-shadow: 0 2px 6px 1px #00000020;
+    box-shadow: 0 2px 6px 1px #00000020;
     flex: 1 0 500px;
     height: 120px;
     /* background-color: aqua; */
@@ -52,6 +62,8 @@
     height: 100%;
     clip-path: polygon(40px 0, 100% 0, 100% 100%, 0 100%);
     background-color: var(--RD-color-white-50);
+    /* 鼠标移动到上面的时候改变成点击的光标 */
+    cursor: pointer;
 
     position: absolute;
     right: 0;
@@ -132,6 +144,10 @@
 }
 
 .title {
+    /* 只显示一行，超出省略号 */
+    overflow: hidden;
+    height: var(--text-height);
+    width: calc(100% - 120px);
     line-height: var(--text-height);
     font-size: 26px;
     color: var(--RD-color-text);
@@ -141,12 +157,19 @@
 }
 
 .synopsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
     font-size: 15px;
     color: var(--RD-color-text);
     position: absolute;
     top: calc(var(--text-height) + 10px);
     left: 50px;
 }
+
 /* 底部作者标签 */
 .content .author {
     width: 100%;
