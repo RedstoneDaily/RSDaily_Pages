@@ -4,6 +4,11 @@
   src: url("/fonts/FontquanXinYiGuanHeiTi-Regular.ttf") format("truetype");
 }
 
+@font-face {
+	font-family: "Minecraft AE";
+	src: url("/fonts/Minecraft-AE.ttf") format("truetype");
+}
+
 :root {
   /* 主红色，深红色，浅红色 */
   --red-color: #a81111;
@@ -22,6 +27,7 @@
   --RD-color-black-50: #16161b80;
   /* 白色 */
   --RD-color-white: #e6ebe6;
+  --RD-color-white-75: #e6ebe6C0;
   --RD-color-white-50: #e6ebe680;
   /* 灰色 */
   --RD-color-gray: #d9d9d9;

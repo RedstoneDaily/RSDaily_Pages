@@ -12,6 +12,7 @@
         "eslint": "^9.9.0",
         "eslint-plugin-vue": "^9.27.0",
         "vue": "^3.4.37",
+        "vue-masonry": "^0.16.0",
         "vue-router": "4"
     },
     "devDependencies": {
