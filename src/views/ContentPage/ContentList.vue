@@ -36,6 +36,27 @@ const fetchData = async () => {
 onMounted(() => {
     fetchData();
 });
+
+
+
+// 动画函数
+const showItem = ref(false);
+
+onMounted(() => {
+    setTimeout(() => {
+        showItem.value = true;
+    }, 200);
+});
+const beforeEnter = (el) => {
+    el.style.opacity = 0;
+};
+const enter = (el, done) => {
+    let delay = el.dataset.index * 80;
+    setTimeout(() => {
+        el.style.opacity = 1;
+        el.style.transition = "opacity .5s"
+    }, delay);
+};
 </script>
 
 <template>
@@ -59,7 +80,10 @@ onMounted(() => {
             </div>
         </div>
         <div class="content-list-other">
-            <ContentItem v-for="(item, index) in contentList.slice(3)" :key="index + 3" :data="item"></ContentItem>
+            <TransitionGroup @before-enter="beforeEnter" @enter="enter">
+                <ContentItem v-show="showItem" v-for="(item, index) in contentList.slice(3)" :key="item.aid"
+                    :data="item" :data-index="index"></ContentItem>
+            </TransitionGroup>
         </div>
     </div>
 
@@ -73,10 +97,16 @@ onMounted(() => {
 </template>
 
 
-<style scoped>
-/* div {
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
-} */
+<style scoped lang="scss">
+@keyframes enter {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
 
 /* 宽度最大为1280px */
 .content-list {
@@ -92,6 +122,8 @@ onMounted(() => {
     display: flex;
     gap: 20px;
     flex-direction: row;
+    animation-duration: 0.5s;
+    animation-name: enter;
 }
 
 /* 各种块item的初始值，宽度最小500px 高度最小120px  */

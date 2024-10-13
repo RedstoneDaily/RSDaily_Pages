@@ -1,5 +1,8 @@
 <script setup>
 // 定义 props 接收父组件传递的 date 参数
+import {ref} from "vue";
+import DateChooserDialog from "@/component/DateChooserDialog.vue";
+
 const props = defineProps({
     date: {
         type: String,
@@ -9,6 +12,10 @@ const props = defineProps({
 
 // 格式化日期为 [YY.MM.DD] 形式
 const formattedDate = `[${String(props.date).slice(-8)}]`;
+
+
+const open = ref(false)
+const showModal = ref(false)
 </script>
 
 <template>
@@ -28,7 +35,9 @@ const formattedDate = `[${String(props.date).slice(-8)}]`;
             <div class="left_red_piece2"></div>
         </div>
         <!-- 左边标题 -->
-        <h1 class="title">红石日报</h1>
+        <h1 class="title">
+            <RouterLink to="/">红石日报</RouterLink>
+        </h1>
 
         <!-- 右边黑色块 -->
         <div class="right_black_piece">
@@ -41,7 +50,9 @@ const formattedDate = `[${String(props.date).slice(-8)}]`;
         </div>
 
         <!-- 右边日期块，动态显示传入的年月日 -->
-        <span class="date">{{ formattedDate }}</span>
+        <span @click="open = !open" class="date">{{ formattedDate }}</span>
+
+      <DateChooserDialog v-model="open">123</DateChooserDialog>
     </div>
 </template>
 
@@ -68,6 +79,10 @@ const formattedDate = `[${String(props.date).slice(-8)}]`;
     left: 15px;
 
     transition: all 0.5s ease-out;
+}
+.title a{
+    color: inherit;
+    text-decoration: none;
 }
 
 .shadow {
@@ -149,6 +164,7 @@ const formattedDate = `[${String(props.date).slice(-8)}]`;
 .date {
     color: var(--text-main-color);
     font-size: 40px;
+    cursor: pointer;
 
     position: absolute;
     right: 0;

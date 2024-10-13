@@ -1,5 +1,9 @@
 <script setup>
 const props = defineProps({
+    dataIndex: {
+        type: Number,
+        required: true,
+    },
     data: {
         type: Object,
         required: true
@@ -14,7 +18,7 @@ const openBilibiliUrl = (url) => {
 </script>
 
 <template>
-    <div @click="openBilibiliUrl(`https://www.bilibili.com/video/${formattedDate.bvid}`)" class="ContentItem">
+    <div @click="openBilibiliUrl(`https://www.bilibili.com/video/${formattedDate.bvid}`)" class="ContentItem" :data-index="dataIndex">
         <!-- 封面图 -->
         <img width="220px" height="100%" :src="formattedDate.cover" referrerpolicy="no-referrer" alt="">
         <!-- 内容 -->

@@ -1,11 +1,11 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import {createRouter, createWebHistory} from "vue-router";
 import Home from "@/views/Home.vue";
 import Page_404 from "@/views/404.vue"
 import ContentPage from "@/views/ContentPage.vue";
 import Search from "@/views/Search.vue";
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes: [
         {
             path: "/",

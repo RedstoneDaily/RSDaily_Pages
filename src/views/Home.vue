@@ -6,13 +6,13 @@ import Line from '../component/textUnderline.vue';
     <div class="home">
 
         <div class="main">
-            <div>
-                <img width="40%" src="/Logo.svg" alt="">
+            <div class="heroText">
+                <img src="/Logo.svg" alt="">
                 <h1>/ 发现,并创造自己的灵感 /</h1>
             </div>
             <div class="jumpLink">
-                <!-- <router-link to="/content"> -->
-                <router-link :to="{ path: '/content' , query: { date: '2024-09-06' }}">
+                <router-link to="/content">
+                <!-- <router-link :to="{ path: '/content' , query: { date: '2024-09-06' }}"> -->
                     <Line>探索最新日报 >></Line>
                 </router-link>
                 <router-link to="/404">
@@ -205,6 +205,31 @@ img {
         font-size: 3vw;
         font-weight: normal;
     }
+
+	.heroText {
+        // display: inline-block;
+        font-size: 100px;
+        position: absolute;
+        left: calc(100vh * 76 / 1080);
+        top: calc(100vh * 57 / 1080);
+		width: calc(100vh * 1139 / 1080);
+		height: calc(100vh * 478 / 1080);
+
+		img {
+			position: absolute;
+			left: calc(100% * 0 / 1139);
+			top: calc(100% * 0 / 478);
+			height: calc(100% * 373 / 478);
+		}
+
+		h1 {
+			position: absolute;
+			left: calc(100% * 30 / 1139);
+			top: calc(100% * 394 / 478);
+			width: 100%;
+			font-size: calc(100vh * 65 / 1080);
+		}
+	}
 
     .jumpLink {
         position: absolute;
