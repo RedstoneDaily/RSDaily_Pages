@@ -1,7 +1,7 @@
 <template>
     <title>{{ title }}</title>
     <navbar v-show="showBar"></navbar>
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
 </template>
 
 <script lang="ts" setup>
