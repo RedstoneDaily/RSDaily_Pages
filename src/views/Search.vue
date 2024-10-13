@@ -1,55 +1,105 @@
 <script setup lang="ts">
-import {ref} from 'vue';
+import {inject, ref, watch} from 'vue';
 import $ from 'jquery';
+import coverErrorImage from "@/assets/archive-img-not-found.svg";
 
-enum Src{
+enum Source{
 	bilibili = "/src/assets/icon/bilibili.svg",
+	unknown = "/src/assets/icon/bilibili.svg",
 }
 
-type SearchItem = {
+interface SearchItem {
 	title: string;
 	description: string;
 	author: string;
-	src: Src;
+	src: Source;
 	coverUrl: string;
 	url: string;
 };
-
-const exampleResult : SearchItem = {
-	title: "【新世界记录】高速2x2玻璃门",
-	description: "你说的对，但是《原神》是由米哈游自主研发的一款全新开放世界冒险游戏。游戏发生在一个被称作「提瓦特」的幻想世界，在这里，被神选中的人将被授予「神之眼」，导引元素之力。你将扮演一位名为「旅行者」的神秘角色，在自由的旅行中邂逅性格各异、能力独特的同伴们，和他们一起击败强敌，找回失散的亲人——同时，逐步发掘「原神」的真相。 ",
-	author: "your mom  from  bilibili.com ",
-	src: Src.bilibili,
-	coverUrl: "/src/assets/3.png",
-	url: "https://www.bilibili.com/"
+type ResultStatus = {
+	status : "initial" | "searching" | "done"
+	data : SearchItem[]
 };
 
-const exampleResult2 : SearchItem = {
-	title: "【新世界记录】高速3x3玻璃门",
-	description: "你说的对，但是《原神》是由米哈游自主研发的一款全新开放世界冒险游戏。游戏发生在一个被称作「提瓦特」的幻想世界，在这里，被神选中的人将被授予「神之眼」，导引元素之力。你将扮演一位名为「旅行者」的神秘角色，在自由的旅行中邂逅性格各异、能力独特的同伴们，和他们一起击败强敌，找回失散的亲人——同时，逐步发掘「原神」的真相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相。 ",
-	author: "your mom  from  bilibili.com ",
-	src: Src.bilibili,
-	coverUrl: "/src/assets/3.png",
-	url: "https://www.bilibili.com/"
-};
+interface Response {
+    data: Datum[];
+    /**
+     * 用时
+     */
+    time_used: number;
+    [property: string]: any;
+}
 
-const results = ref<SearchItem[]>([
-	{ ...exampleResult }, 
-	{ ...exampleResult2 }, 
-	{ ...exampleResult }, 
-	{ ...exampleResult2 }, 
-	{ ...exampleResult2 }, 
-	{ ...exampleResult },
-	{ ...exampleResult2 }, 
-	{ ...exampleResult },
-]);
+interface Datum {
+    /**
+     * 文字描述，搜索到这部分
+     */
+    content: string;
+    id: number;
+    imgs: string[];
+    /**
+     * 源，哪个档案馆来的
+     */
+    source: string;
+    /**
+     * 资源地址
+     */
+    url: string;
+    [property: string]: any;
+}
 
-const handleExpand = (_this: any, i: number) => {
-	// The description element
+// const mockResult1 : SearchItem = {
+// 	title: "【新世界记录】高速2x2玻璃门",
+// 	description: "你说的对，但是《原神》是由米哈游自主研发的一款全新开放世界冒险游戏。游戏发生在一个被称作「提瓦特」的幻想世界，在这里，被神选中的人将被授予「神之眼」，导引元素之力。你将扮演一位名为「旅行者」的神秘角色，在自由的旅行中邂逅性格各异、能力独特的同伴们，和他们一起击败强敌，找回失散的亲人——同时，逐步发掘「原神」的真相。 ",
+// 	author: "your mom  from  bilibili.com ",
+// 	src: Source.bilibili,
+// 	coverUrl: "/src/assets/3.png",
+// 	url: "https://www.bilibili.com/"
+// };
+
+// const mockResult2 : SearchItem = {
+// 	title: "【新世界记录】高速3x3玻璃门",
+// 	description: "你说的对，但是《原神》是由米哈游自主研发的一款全新开放世界冒险游戏。游戏发生在一个被称作「提瓦特」的幻想世界，在这里，被神选中的人将被授予「神之眼」，导引元素之力。你将扮演一位名为「旅行者」的神秘角色，在自由的旅行中邂逅性格各异、能力独特的同伴们，和他们一起击败强敌，找回失散的亲人——同时，逐步发掘「原神」的真相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相。 ",
+// 	author: "your mom  from  bilibili.com ",
+// 	src: Source.bilibili,
+// 	coverUrl: "/src/assets/3.png",
+// 	url: "https://www.bilibili.com/"
+// };
+
+// const mockResults = [
+// 	{ ...mockResult1 }, 
+// 	{ ...mockResult2 }, 
+// 	{ ...mockResult1 }, 
+// 	{ ...mockResult2 }, 
+// 	{ ...mockResult2 }, 
+// 	{ ...mockResult1 },
+// 	{ ...mockResult2 }, 
+// 	{ ...mockResult1 },
+// ];
+
+const redrawVueMasonry = inject("redrawVueMasonry") as (id?: any) => void;
+const searchInput = ref("");
+const result = ref<ResultStatus>({status: "initial", data: []});
+watch(result, () => {$(redrawVueMasonry)});
+
+
+///
+///	Event Callbacks 
+///
+
+/**
+ * 触发折叠/展开事件时的回调，接管瀑布流布局更新时的 css 工作，通过数步操作实现兼具 line-clamp 的智能行限、高度变化动画、以及 masonry 插件的瀑布流重排动画的过渡动画
+ * 
+ * @param _this `<template>` context 中获取的，代表全局 App 对象的 this 对象
+ * @param i 元素序号，以确定施加动画操作的元素
+ */
+const handleToggle = (i: number) => {
+
+	// Element references
 	const input = $(`#expand-btn-${i}`)[0] as HTMLInputElement;
 	const desc = $(input).parent().siblings(".description")[0];
 	const finalStateClass = input.checked ? "lc-expanded" : "lc-folded";
-	console.log(desc.style);
+	// console.log(desc.style);
 
 	// 1. Get the initial height
 	const h_i = window.getComputedStyle(desc).getPropertyValue("height");
@@ -65,8 +115,8 @@ const handleExpand = (_this: any, i: number) => {
 	
 	// 4. Launch the masonry rearrangement animations at this moment
 	// 	  so that it refers to description's final state instead of initial state
-	_this.$redrawVueMasonry();
-	console.log("redraw called");
+	// console.log("redraw called");
+	redrawVueMasonry();
 
 	// 5. Set back to initial state via accurate heights
 	desc.classList.remove("lc-folded", "lc-expanded");
@@ -100,6 +150,47 @@ const handleExpand = (_this: any, i: number) => {
 
 }
 
+/**
+ * 输入框回车时触发的回调，也即发起搜索
+ */
+ interface SearchItem {
+	title: string;
+	description: string;
+	author: string;
+	src: Source;
+	coverUrl: string;
+	url: string;
+};
+const handleEnter = (payload: KeyboardEvent) => {
+	if(payload.key != "Enter") return;
+	search();
+}
+const search = () => {
+	const apiUrl = `https://api.rsdaily.com/v2/archive`;
+	result.value = { ...result.value, status: "searching" };
+	fetch(`${apiUrl}/${searchInput.value}`, { method: 'GET' })
+		.then(res => res.json())
+		.then(_res => {
+			const res = _res as Response;
+			const data = res.data;
+			result.value = {
+				status: "done",
+				data: data.map((item): SearchItem => {
+					const content = item.content.trim();
+					const source = item.source in Source ? Source[item.source as keyof typeof Source] : Source.unknown;
+					return {
+						title: content.split('\n')[0].trim(),
+						description: content.split('\n').slice(1).join('\n').trim(),
+						author: "",
+						src: source,
+						coverUrl: item.imgs[0],
+						url: item.url
+					};
+				})
+			}
+		})
+}
+
 </script>
 
 <template>
@@ -107,41 +198,49 @@ const handleExpand = (_this: any, i: number) => {
         <!-- 搜索功能盒子 -->
         <div class="search-box">
             <!-- logo -->
-            <img src="/src/assets/icon/icon.svg" alt="Logo" class="logo">
+			<RouterLink to="/">
+				<img src="/src/assets/icon/icon.svg" alt="Logo" class="logo">
+			</RouterLink>
             <!-- 红色搜索盒子 -->
             <div class="red-search-box">
                 <!-- 搜索框 -->
-                <input type="text" class="search-input" placeholder="搜索红石模块_">
-                <!-- <div contenteditable="true" class="search-input">123</div> -->
+                <input id="search-input" type="text" class="search-input" placeholder="搜索红石模块_" @keydown="handleEnter" v-model="searchInput">
                 <!-- 分割条 -->
                 <div class="divider"></div>
                 <!-- 高级选项 -->
-                <div class="advanced-options"><div>严格度:严格 排序:热度 源:所有 《原神》是由米哈游自主研发的一款全新开放世界冒险游戏游戏游戏游戏游戏游戏游</div></div>
+                <div class="advanced-options"><div><s style="opacity: 0.7;">严格度:严格 排序:热度 源:所有</s> 功能开发中，敬请期待</div></div>
             </div>
 			<input type="checkbox" id="menu-btn" class="menu-btn" />
 	        <label for="menu-btn" class="menu-icon"></label>
         </div>
 
-		<div class="results" v-masonry transition-duration="0.6s" item-selector=".item" column-width="429" gutter="23">
-		    <div v-masonry-tile class="item" v-for="(item, i) in results" @transitionstart="(e)=>{console.log(`${i} - transition start - ${e.propertyName}`)}">
+        <div v-if="result.status == 'initial'" class="result-prompt">
+			理论上这时候你应该还没开始搜索所以这里要写什么提示词好呢.jpg
+		</div>
+		<div v-else-if="result.status == 'searching'" class="result-prompt">
+			搜索中......
+		</div>
+		<div v-else-if="result.data.length === 0" class="result-prompt">
+			哇袄，搜索了个击败
+		</div>
+		<div v-else class="results" v-masonry transition-duration="0.6s" item-selector=".item" column-width="429" gutter="23">
+		    <div v-masonry-tile class="item" v-for="(item, i) in result.data" @transitionstart="">
 				<div style="position: relative;">
-					<img class="cover" :src="item.coverUrl">
-					<div class="block1">
+					<img class="cover" :src="item.coverUrl" referrerpolicy="no-referrer" @load="redrawVueMasonry()" @error.once="e => (e.target as HTMLImageElement).src = coverErrorImage">
+					<a class="block1" :href="item.url">
 						<div class="block2"></div>
 						<div class="title">{{ item.title }}</div>
-					</div>
+					</a>
 				</div>
 				<div class="description lc-folded">{{ item.description }}</div>
 				<div class="footer">
 					<img alt="src-logo" class="src-logo" :src="item.src">
 					<div class="author">{{ item.author }}</div>
-					<input type="checkbox" :id=" `expand-btn-${i}` " class="expand-btn" @change="handleExpand(this, i)"/>
+					<input type="checkbox" :id=" `expand-btn-${i}` " class="expand-btn" @change="handleToggle(i)"/>
 					<label :for=" `expand-btn-${i}` " class="expand-icon"><img alt="expand" src="/src/assets/icon/arrow-down.svg"></label>
 				</div>
 		    </div>
 		</div>
-
-        <div></div>
     </div>
 </template>
 
@@ -154,6 +253,7 @@ const handleExpand = (_this: any, i: number) => {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	overflow-y: scroll;
 
     .search-box {
 		position: relative;
@@ -178,6 +278,8 @@ const handleExpand = (_this: any, i: number) => {
 
         .red-search-box {
 			flex: 1;
+			display: flex;
+			flex-direction: column;
             height: 50px;
 			margin-right: 84px;
 			padding-left: 7px;
@@ -188,8 +290,9 @@ const handleExpand = (_this: any, i: number) => {
 			transition: all 0.2s ease;
             
 			.search-input {
+				align-self: stretch;
                 font-size: 32px;
-				margin-top: -1px;
+				margin: -1px 20px auto 0px;
 				padding: 0;
 				line-height: 1.5;
 				overflow: none;
@@ -256,6 +359,18 @@ const handleExpand = (_this: any, i: number) => {
         }
     }
 
+	.result-prompt {
+		margin-top: 100px;
+		max-width: 900px;
+		width: 100%;
+		padding: 50px;
+
+		background-color: var(--RD-color-white-50);
+		text-align: center;
+		font-size: 18px;
+		
+	}
+
 	/* clearfix */
     .results:after {
         content: '';
@@ -287,6 +402,7 @@ const handleExpand = (_this: any, i: number) => {
     			position: absolute;
     			right: 0;
     			bottom: 2.5px;
+				text-decoration: none;
 
 				.block2 {
 	    			clip-path: polygon(16.5px 0, 100% 0, 100% 100%, 0 100%);
@@ -315,6 +431,7 @@ const handleExpand = (_this: any, i: number) => {
 				font-size: 14px;
 				line-height: 1.5;
 				overflow: hidden;
+				white-space: break-spaces;
 			}
 
 			.description.lc-expanded {
