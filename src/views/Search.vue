@@ -2,10 +2,17 @@
 import {inject, ref, watch} from 'vue';
 import $ from 'jquery';
 import coverErrorImage from "@/assets/archive-img-not-found.svg";
+// import mockCoverImage from "@/assets/3.png"
 
-enum Source{
-	bilibili = "/src/assets/icon/bilibili.svg",
-	unknown = "/src/assets/icon/bilibili.svg",
+import iconBilibili from "@/assets/icon/bilibili.svg"
+
+const iconsOfSource = {
+	"bilibili" : iconBilibili,
+	"unknown" : iconBilibili,
+} as const;
+type Source = keyof typeof iconsOfSource;
+function isSource(key: string): key is Source {
+	return key in iconsOfSource;
 }
 
 interface SearchItem {
@@ -177,7 +184,7 @@ const search = () => {
 				status: "done",
 				data: data.map((item): SearchItem => {
 					const content = item.content.trim();
-					const source = item.source in Source ? Source[item.source as keyof typeof Source] : Source.unknown;
+					const source = isSource(item.source) ? item.source : "unknown";
 					return {
 						title: content.split('\n')[0].trim(),
 						description: content.split('\n').slice(1).join('\n').trim(),
@@ -234,7 +241,7 @@ const search = () => {
 				</div>
 				<div class="description lc-folded">{{ item.description }}</div>
 				<div class="footer">
-					<img alt="src-logo" class="src-logo" :src="item.src">
+					<img alt="src-logo" class="src-logo" :src="iconsOfSource[item.src]">
 					<div class="author">{{ item.author }}</div>
 					<input type="checkbox" :id=" `expand-btn-${i}` " class="expand-btn" @change="handleToggle(i)"/>
 					<label :for=" `expand-btn-${i}` " class="expand-icon"><img alt="expand" src="/src/assets/icon/arrow-down.svg"></label>
