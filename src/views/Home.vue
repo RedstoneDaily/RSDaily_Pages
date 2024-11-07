@@ -12,7 +12,7 @@ import Line from '../component/textUnderline.vue';
             </div>
             <div class="jumpLink">
                 <router-link to="/content">
-                <!-- <router-link :to="{ path: '/content' , query: { date: '2024-09-06' }}"> -->
+                    <!-- <router-link :to="{ path: '/content' , query: { date: '2024-09-06' }}"> -->
                     <Line>探索最新日报 >></Line>
                 </router-link>
                 <router-link to="/404">
@@ -206,30 +206,30 @@ img {
         font-weight: normal;
     }
 
-	.heroText {
+    .heroText {
         // display: inline-block;
         font-size: 100px;
         position: absolute;
         left: calc(100vh * 76 / 1080);
         top: calc(100vh * 57 / 1080);
-		width: calc(100vh * 1139 / 1080);
-		height: calc(100vh * 478 / 1080);
+        width: calc(100vh * 1139 / 1080);
+        height: calc(100vh * 478 / 1080);
 
-		img {
-			position: absolute;
-			left: calc(100% * 0 / 1139);
-			top: calc(100% * 0 / 478);
-			height: calc(100% * 373 / 478);
-		}
+        img {
+            position: absolute;
+            left: calc(100% * 0 / 1139);
+            top: calc(100% * 0 / 478);
+            height: calc(100% * 373 / 478);
+        }
 
-		h1 {
-			position: absolute;
-			left: calc(100% * 30 / 1139);
-			top: calc(100% * 394 / 478);
-			width: 100%;
-			font-size: calc(100vh * 65 / 1080);
-		}
-	}
+        h1 {
+            position: absolute;
+            left: calc(100% * 30 / 1139);
+            top: calc(100% * 394 / 478);
+            width: 100%;
+            font-size: calc(100vh * 65 / 1080);
+        }
+    }
 
     .jumpLink {
         position: absolute;
@@ -250,6 +250,11 @@ img {
 
 .page1 {
     @include page();
+
+    background-image: url('/background/content.png');
+    background-position-x: calc(100vw * 0.3);
+    background-repeat: no-repeat;
+    background-size: auto;
 
     .title {
         top: 80px;
@@ -290,6 +295,10 @@ img {
 
 .page2 {
     @include page();
+    background-image: url('/background/source.png');
+    background-position-x: calc(100vw * -0.2);
+    background-repeat: no-repeat;
+    background-size: auto;
 
     .title {
         top: 80px;
