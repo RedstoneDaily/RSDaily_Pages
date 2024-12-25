@@ -179,7 +179,9 @@ img {
 }
 
 .title {
-    font-size: 30px;
+    height: 40px;
+    overflow: hidden;
+    font-size: 28px;
     color: var(--RD-color-white);
     position: absolute;
     top: 0px;
