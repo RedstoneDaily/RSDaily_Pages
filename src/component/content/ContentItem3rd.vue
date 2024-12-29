@@ -139,6 +139,8 @@ const openBilibiliUrl = (url) => {
 }
 
 .title {
+    height: var(--text-height);
+    overflow: hidden;
     line-height: var(--text-height);
     font-size: 26px;
     color: var(--RD-color-white);
