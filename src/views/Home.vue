@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import Line from '../component/textUnderline.vue';
 </script>
 
@@ -192,42 +192,25 @@ img {
     width: 100%;
     height: 100vh;
     background: url('/background/Fparrot_CPU_small.png');
-    background-size: 100% 100%;
-    scroll-snap-align: start;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 
     img {
         pointer-events: none;
         user-select: none;
     }
 
-    h1 {
-        color: white;
-        font-size: 3vw;
-        font-weight: normal;
-    }
-
     .heroText {
         // display: inline-block;
         font-size: 100px;
-        position: absolute;
-        left: calc(100vh * 76 / 1080);
-        top: calc(100vh * 57 / 1080);
-        width: calc(100vh * 1139 / 1080);
-        height: calc(100vh * 478 / 1080);
-
-        img {
-            position: absolute;
-            left: calc(100% * 0 / 1139);
-            top: calc(100% * 0 / 478);
-            height: calc(100% * 373 / 478);
-        }
+        width: 100%;
 
         h1 {
-            position: absolute;
-            left: calc(100% * 30 / 1139);
-            top: calc(100% * 394 / 478);
+            color: white;
+            font-weight: normal;
             width: 100%;
-            font-size: calc(100vh * 65 / 1080);
+            font-size: 60px;
         }
     }
 
@@ -235,7 +218,7 @@ img {
         position: absolute;
         right: 0;
         bottom: 0;
-        width: 50vw;
+        margin: 20px;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
@@ -377,5 +360,61 @@ img {
         bottom: 100px;
         left: 60px;
     }
+}
+// 媒体查询
+@media (max-width: 768px) {
+    .main {
+        .heroText {
+            font-size: 10vw;
+
+            img {
+                height: 50vw;
+            }
+
+            h1 {
+                font-size: 8vw;
+            }
+        }
+
+        .jumpLink {
+            padding-top: 20px;
+            border-top: 2px solid white;
+            position: relative;
+            align-items: flex-start;
+            a {
+                font-size: 5vw;
+            }
+        }
+    }
+
+    // .page1,
+    // .page2,
+    // .page3 {
+    //     .title {
+    //         font-size: 10vw;
+    //     }
+
+    //     .content {
+    //         font-size: 5vw;
+    //     }
+
+    //     img {
+    //         width: 100vw;
+    //     }
+
+    //     .mask {
+    //         div {
+    //             width: 100vw;
+    //         }
+    //     }
+
+    //     .link {
+    //         bottom: 20px;
+    //         left: 20px;
+    //         a {
+    //             font-size: 5vw;
+    //         }
+    //     }
+    // }
 }
 </style>
